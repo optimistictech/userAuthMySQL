@@ -7,6 +7,35 @@ function registerUser($fullnames, $email, $password, $gender, $country){
     //create a connection variable using the db function in config.php
     $conn = db();
    //check if user with this email already exist in the database
+   $query=mysqli_query($conn, "SELECT * FROM Students WHERE email = '$email'");
+
+   if(mysqli_num_rows($query)>0){
+
+    echo "<script> alert('Email already exist') </script>";
+
+   }
+
+   else{
+
+    $query= "INSERT INTO `Students` (`full_names`, `country`, `email`, `gender`, `password`)
+     VALUES ( '$fullnames', '$country', '$email', '$gender', '$password')";
+    
+    if(mysqli_query($conn, $query)){
+
+        echo "<script> alert('User Successfully registered') </script>";
+    
+       }
+
+       else{
+
+        echo "<script> alert('Registration failed') </script>";
+
+       }
+
+
+    
+   }
+
 }
 
 
