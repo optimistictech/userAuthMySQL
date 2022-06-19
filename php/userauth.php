@@ -44,10 +44,40 @@ function loginUser($email, $password){
     //create a connection variable using the db function in config.php
     $conn = db();
 
-    echo "<h1 style='color: red'> LOG ME IN (IMPLEMENT ME) </h1>";
     //open connection to the database and check if username exist in the database
     //if it does, check if the password is the same with what is given
     //if true then set user session for the user and redirect to the dasbboard
+    $query=mysqli_query($conn, "SELECT * FROM Students WHERE email = '$email' ");
+
+    if(mysqli_num_rows($query)>0){
+ 
+        $query=mysqli_query($conn, "SELECT * FROM Students WHERE `password` = '$password' ");
+
+        if(mysqli_num_rows($query)>0){
+
+            $_SESSION['username'] = $email;
+
+            header("Location: ../dashboard.php");
+
+        }
+
+        else{
+
+            echo "<script> alert('Wrong Password') </script>";
+
+        }
+ 
+    }
+
+    else{
+
+        echo "<script> alert('User does not Exist') </script>";
+
+    }
+
+    
+
+
 }
 
 
