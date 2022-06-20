@@ -156,4 +156,11 @@ function getusers(){
  function deleteaccount($id){
      $conn = db();
      //delete user with the given id from the database
+
+     $query=mysqli_query($conn, "DELETE FROM Students WHERE `Students`.`id` = '$id' ");
+
+    if($query){
+
+        echo "<script> alert('User deleted')</script>";
+    }
  }
