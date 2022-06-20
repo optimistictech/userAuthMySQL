@@ -64,7 +64,8 @@ function loginUser($email, $password){
 
         else{
 
-            echo "<script> alert('Wrong Password') </script>";
+            echo "<script> alert('Wrong Password'); window.location.href='../forms/login.html' </script>";
+            
 
         }
  
@@ -72,7 +73,10 @@ function loginUser($email, $password){
 
     else{
 
-        echo "<script> alert('User does not Exist') </script>";
+        echo "<script> alert('User does not Exist'); window.location.href='../forms/login.html' </script>";
+
+       
+
 
     }
 
@@ -85,9 +89,36 @@ function loginUser($email, $password){
 function resetPassword($email, $password){
     //create a connection variable using the db function in config.php
     $conn = db();
-    echo "<h1 style='color: red'>RESET YOUR PASSWORD (IMPLEMENT ME)</h1>";
+   
     //open connection to the database and check if username exist in the database
     //if it does, replace the password with $password given
+
+    $query=mysqli_query($conn, "SELECT * FROM Students WHERE email = '$email' ");
+
+    if(mysqli_num_rows($query)>0){
+
+        $query= "UPDATE `Students` SET `password` = '$password' WHERE `Students`.`email` = '$email'; ";
+    
+    if(mysqli_query($conn, $query)){
+
+        echo "<script> alert('Password Updated'); window.location.href='../forms/login.html' </script>";
+    
+       }
+
+       else{
+        echo "<script> alert('An Error occured') </script>";
+
+       }
+
+
+    }
+
+    else{
+
+        echo "<script> alert('User does not Exist'); window.location.href='../forms/resetpassword.html' </script>";
+
+    }
+
 }
 
 function getusers(){
